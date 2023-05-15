@@ -1,0 +1,28 @@
+[package]
+name = "ada"
+version = "0.1.0"
+edition = "2021"
+authors = ["{{ cookiecutter.author }} <hi@glyphli.art>"]
+license = "ISC"
+homepage = "https://youtu.be/dQw4w9WgXcQ"
+description = "additive synth"
+
+[workspace]
+members = ["xtask"]
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+nih_plug = { git = "https://github.com/robbert-vdh/nih-plug.git", features = ["assert_process_allocs"] }
+# nih_plug = { git = "https://github.com/robbert-vdh/nih-plug.git", default_features = false, features = ["assert_process_allocs"] }
+lazy_static = "1.4.0"
+
+[profile.release]
+lto = "thin"
+strip = "symbols"
+
+[profile.profiling]
+inherits = "release"
+debug = true
+strip = "none"

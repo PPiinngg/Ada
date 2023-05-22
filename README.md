@@ -8,6 +8,6 @@ IT IS **VERY LIKELY** THAT THIS PROJECT WILL BE **COMPLETELY RESTRUCTURED** MULT
 ---
 
 ## MVP
-[x] - Vizia hello world
-[] - Basic round-robin voice allocator
-[] - 
+- [x] Vizia hello world
+- [ ] Basic round-robin voice allocator
+- [ ] 

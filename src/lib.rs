@@ -1,7 +1,6 @@
 use ada::state::AdaState;
 use nih_plug::prelude::*;
 use nih_plug_vizia::ViziaState;
-use std::f32::consts;
 use std::sync::Arc;
 
 mod ada;
@@ -112,44 +111,6 @@ impl Plugin for Ada {
 			// Smoothing is optionally built into the parameters themselves
 			let gain = self.params.gain.smoothed.next();
 
-			// // This plugin can be either triggered by MIDI or controleld by a parameter
-			// let sine = if self.params.use_midi.value() {
-			//     // Act on the next MIDI event
-			//     while let Some(event) = next_event {
-			//         if event.timing() > sample_id as u32 {
-			//             break;
-			//         }
-
-			//         match event {
-			//             NoteEvent::NoteOn { note, velocity, .. } => {
-			//                 self.midi_note_id = note;
-			//                 self.midi_note_freq = util::midi_note_to_freq(note);
-			//                 self.midi_note_gain.set_target(self.sample_rate, velocity);
-			//             }
-			//             NoteEvent::NoteOff { note, .. } if note == self.midi_note_id => {
-			//                 self.midi_note_gain.set_target(self.sample_rate, 0.0);
-			//             }
-			//             NoteEvent::PolyPressure { note, pressure, .. }
-			//                 if note == self.midi_note_id =>
-			//             {
-			//                 self.midi_note_gain.set_target(self.sample_rate, pressure);
-			//             }
-			//             _ => (),
-			//         }
-
-			//         next_event = context.next_event();
-			//     }
-
-			//     // declick
-			//     self.calculate_sine(self.midi_note_freq) * self.midi_note_gain.next()
-			// } else {
-			//     let frequency = self.params.frequency.smoothed.next();
-			//     self.calculate_sine(frequency)
-			// };
-
-			// let mut amplitude: f32 = 0.0f32;
-			// let num_samples = channel_samples.len();
-
 			// Act on the next MIDI event
 			while let Some(event) = next_event {
 				if event.timing() > sample_id as u32 {
@@ -162,7 +123,7 @@ impl Plugin for Ada {
 			let mono_sample = self.state.tick();
 
 			for sample in channel_samples {
-				*sample = mono_sample * gain;
+				*sample = mono_sample * util::db_to_gain_fast(gain);
 			}
 		}
 

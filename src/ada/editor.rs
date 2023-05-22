@@ -15,7 +15,7 @@ impl Model for Data {}
 
 // Makes sense to also define this here, makes it a bit easier to keep track of
 pub(crate) fn default_state() -> Arc<ViziaState> {
-	ViziaState::new(|| (200, 150))
+	ViziaState::new(|| (800, 600))
 }
 
 pub(crate) fn create(
@@ -33,21 +33,20 @@ pub(crate) fn create(
 
 		ResizeHandle::new(cx);
 
-		VStack::new(cx, |cx| {
+		HStack::new(cx, |cx| {
 			Label::new(cx, "Ada")
 				.font_family(vec![FamilyOwned::Name(String::from(
-					assets::NOTO_SANS_THIN,
+					assets::NOTO_SANS_BOLD,
 				))])
-				.font_size(30.0)
-				.height(Pixels(50.0))
-				.child_top(Stretch(1.0))
-				.child_bottom(Pixels(0.0));
+				.font_size(15.0)
+				.height(Pixels(15.0))
+				.child_top(Pixels(15.0))
+				.child_left(Pixels(15.0));
 
 			Label::new(cx, "Gain");
 			ParamSlider::new(cx, Data::params, |params| &params.gain);
 		})
-		.row_between(Pixels(0.0))
-		.child_left(Stretch(1.0))
-		.child_right(Stretch(1.0));
+		.col_between(Pixels(0.0))
+		.child_bottom(Stretch(1.0));
 	})
 }

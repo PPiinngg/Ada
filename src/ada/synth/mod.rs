@@ -34,6 +34,6 @@ impl TestSine {
 
     pub fn reset(&mut self) {
         self.phasor = self.init_phase;
-        self.step = samplerate() / self.freq;
+        self.step = self.freq / samplerate();
     }
 }

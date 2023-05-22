@@ -1,0 +1,1 @@
+pub const MAX_POLYPHONY: usize = 12;

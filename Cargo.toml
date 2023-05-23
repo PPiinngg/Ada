@@ -2,10 +2,9 @@
 name = "ada"
 version = "0.1.0"
 edition = "2021"
-authors = ["{{ cookiecutter.author }} <hi@glyphli.art>"]
-license = "ISC"
-homepage = "https://youtu.be/dQw4w9WgXcQ"
-description = "additive synth"
+authors = ["Zora Harrison <hi@glyphli.art>"]
+license = "MPL-2.0"
+description = "Semi-modular Additive Synth"
 
 [workspace]
 members = ["xtask"]

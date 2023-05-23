@@ -50,7 +50,7 @@ impl AdaState {
 	}
 
 	pub fn reset(&mut self) {
-        for i in 0..MAX_POLYPHONY {
+		for i in 0..MAX_POLYPHONY {
 			self.polyvoices[i].amp = 0f32;
 		}
 	}

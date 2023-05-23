@@ -1,7 +1,7 @@
 use super::super::consts::*;
 use nih_plug::{prelude::NoteEvent, util::midi_note_to_freq};
 
-const MIDI_MAX_ID: usize = 127usize;
+// const MIDI_MAX_ID: usize = 127usize;
 
 pub enum AdaNoteEvent {
 	Trigger {
@@ -76,18 +76,19 @@ impl PolyVoiceAllocator {
 	}
 
 
-	pub fn get_note_id(&self, voice_idx: &usize) -> Option<usize> {
-		for (i, voice) in self.voices.iter().enumerate() {
-			match voice {
-				Some(note_id) => {
-					if i == *voice_idx {
-						return Some(*note_id);
-					}
-				}
-				None => {}
-			}
-		}
+	// pub fn get_note_id(&self, voice_idx: &usize) -> Option<usize> {
+	// 	for (i, voice) in self.voices.iter().enumerate() {
+	// 		match voice {
+	// 			Some(note_id) => {
+	// 				if i == *voice_idx {
+	// 					return Some(*note_id);
+	// 				}
+	// 			}
+	// 			None => {}
+	// 		}
+	// 	}
 
-		return None;
-	}
+	// 	return None;
+	// }
 }
+ 

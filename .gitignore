@@ -4,6 +4,8 @@ target/
 */build.bat
 */clap-validator.exe
 
+Cargo.lock
+
 **/*.rs.bk
 
 *.pdb

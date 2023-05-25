@@ -2,7 +2,7 @@ use crate::ada::{
 	consts::{PARTIAL_COUNT, SIMD_SIZE},
 	meta::samplerate,
 	types::SimdFloats,
-	util::cordic::{cordic_rotate, temp_rotate},
+	util::cordic::simd::{cordic_rotate, temp_rotate},
 };
 
 pub const PARTIAL_VEC_SIZE: usize = PARTIAL_COUNT / SIMD_SIZE;
@@ -38,14 +38,14 @@ impl SineBank {
 		}
 
 		Self {
-			cos: vec![SimdFloats::default(); PARTIAL_VEC_SIZE],
-			sin: vec![SimdFloats::default(); PARTIAL_VEC_SIZE],
-			phase: vec![SimdFloats::default(); PARTIAL_VEC_SIZE],
+			cos: vec![SimdFloats::splat(1f32); PARTIAL_VEC_SIZE],
+			sin: vec![SimdFloats::splat(0f32); PARTIAL_VEC_SIZE],
+			phase: vec![SimdFloats::splat(0f32); PARTIAL_VEC_SIZE],
 
-			step: vec![SimdFloats::default(); PARTIAL_VEC_SIZE],
-			freq: vec![SimdFloats::default(); PARTIAL_VEC_SIZE],
+			step: vec![SimdFloats::splat(0f32); PARTIAL_VEC_SIZE],
+			freq: vec![SimdFloats::splat(0f32); PARTIAL_VEC_SIZE],
 			ratio: ratios,
-			fund: SimdFloats::default(),
+			fund: SimdFloats::splat(0f32),
 
 			amp: amps,
 		}
@@ -63,7 +63,7 @@ impl SineBank {
 
 	#[inline]
 	pub fn set_fund(&mut self, new_fund: f32) {
-		self.fund = SimdFloats::splat(samplerate());
+		self.fund = SimdFloats::splat(new_fund);
 		self.calc_step();
 	}
 
@@ -71,7 +71,7 @@ impl SineBank {
 	pub fn calc_step(&mut self) {
 		let samplerate = SimdFloats::splat(samplerate());
 		for i in 0..PARTIAL_VEC_SIZE {
-			self.step[i] = ((self.fund * self.ratio[i]) + self.freq[i]) / samplerate;
+			self.step[i] = (((self.fund * self.ratio[i]) + self.freq[i]) / samplerate);
 		}
 	}
 

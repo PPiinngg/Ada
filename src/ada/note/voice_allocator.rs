@@ -14,7 +14,7 @@ pub enum AdaNoteEvent {
 	},
 }
 
-// not quite round robin but good enough for now
+// good enough for now
 pub struct PolyVoiceAllocator {
 	/// voices[voice index] -> MIDI note ID
 	voices: [Option<usize>; MAX_POLYPHONY],

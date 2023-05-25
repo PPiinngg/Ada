@@ -1,3 +1,5 @@
+#![feature(portable_simd)]
+
 use ada::state::AdaState;
 use nih_plug::prelude::*;
 use nih_plug_vizia::ViziaState;
@@ -120,7 +122,7 @@ impl Plugin for Ada {
 				next_event = context.next_event();
 			}
 
-			let mono_sample = self.state.tick();
+			let mono_sample = self.state.render();
 
 			for sample in channel_samples {
 				*sample = mono_sample * util::db_to_gain_fast(gain);
